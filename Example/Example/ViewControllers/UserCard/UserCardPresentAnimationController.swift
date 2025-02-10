@@ -21,7 +21,7 @@ class UserCardPresentAnimationController: NSObject, UIViewControllerAnimatedTran
             let _ = toVC.view.snapshotView(afterScreenUpdates: true),
             let fromCell = fromVC.garlandCollection.cellForItem(at: fromVC.selectedCardIndex) as? CollectionCell else {
                 
-                transitionContext.completeTransition(false)
+                CustomTransitionAnimator.alphaPresent(using: transitionContext, duration: GarlandConfig.shared.animationDuration)
                 return
         }
         
@@ -59,9 +59,9 @@ class UserCardPresentAnimationController: NSObject, UIViewControllerAnimatedTran
         
         let animations = CAAnimationGroup()
         animations.animations = [cornerRadiusAnimation, borderWidthAnimation, borderColorAnimation]
-        animations.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        animations.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         animations.duration = duration * 0.6
-        animations.fillMode = kCAFillModeForwards
+        animations.fillMode = CAMediaTimingFillMode.forwards
         animations.isRemovedOnCompletion = false
         avatarSnapshot.layer.add(animations, forKey: "transitionAnimations")
         

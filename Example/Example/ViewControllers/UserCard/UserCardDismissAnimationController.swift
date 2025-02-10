@@ -21,9 +21,9 @@ class UserCardDismissAnimationController: NSObject, UIViewControllerAnimatedTran
             let snapshotSubviews = fromVC.card.snapshotView(afterScreenUpdates: true),
             let cell = toVC.garlandCollection.cellForItem(at: toVC.selectedCardIndex) as? CollectionCell else {
                 
-                transitionContext.completeTransition(false)
+                CustomTransitionAnimator.alphaDismiss(using: transitionContext, duration: GarlandConfig.shared.animationDuration)
                 return
-        }
+        } 
         
         let containerView = transitionContext.containerView
         containerView.insertSubview(toVC.view, at: 0)
@@ -64,9 +64,9 @@ class UserCardDismissAnimationController: NSObject, UIViewControllerAnimatedTran
         
         let animations = CAAnimationGroup()
         animations.animations = [cornerRadiusAnimation, borderWidthAnimation, borderColorAnimation]
-        animations.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animations.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         animations.duration = duration * 0.6
-        animations.fillMode = kCAFillModeForwards
+        animations.fillMode = CAMediaTimingFillMode.forwards
         animations.isRemovedOnCompletion = false
         avatarSnapshot.layer.add(animations, forKey: "transitionAnimations")
 
